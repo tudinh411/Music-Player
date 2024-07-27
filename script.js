@@ -74,8 +74,26 @@ const app = {
     {
         name: "Small Girl",
         singer: "Lee Young Ji",
-        path: './assets/music/[MV] 이영지 - Small girl feat. 도경수 (D.O.) (320).mp3',
+        path: './assets/music/smallgirl.mp3',
         image: 'small_girl.jpeg'
+    },
+    {
+        name: "The Hills",
+        singer: "The Weeknd",
+        path: './assets/music/The Weeknd - The Hills.mp3',
+        image: 'the_hills.jpg'
+    },
+    {
+        name: "One Call Away",
+        singer: "Charlie Puth",
+        path: './assets/music/Charlie Puth - One Call Away [Official Video].mp3',
+        image: 'callaway.jpeg'
+    },
+    {
+        name: "Shivers",
+        singer: "Ed Sheeran",
+        path: './assets/music/Ed Sheeran - Shivers [Official Video] (1).mp3',
+        image: 'Ed_Sheeran_-_Shivers.png'
     }],
     setConfig: function (key,value) {
         this.config[key] = value;
@@ -160,6 +178,7 @@ const app = {
             if (audio.duration) {
                 const progressPercent = Math.floor(audio.currentTime / audio.duration * 100);
                 progress.value = progressPercent;
+                progress.style.background = `linear-gradient(to right, var(--primary-color) ${progressPercent}%, #d3d3d3 ${progressPercent}%)`;
             }
         }
 
@@ -168,6 +187,12 @@ const app = {
             const seekTime = audio.duration * e.target.value / 100
             audio.currentTime = seekTime;
         }
+
+        // Smooth transition when a new song is loaded
+        audio.onloadeddata = function () {
+            progress.value = 0;
+            progress.style.background = 'linear-gradient(to right, var(--primary-color) 0%, #d3d3d3 0%)';
+        };
 
         // Handle when going to the next song
         nextBtn.onclick = function (){
@@ -213,6 +238,7 @@ const app = {
             } else {
             nextBtn.click();
             }
+        
         }
 
         // Play anysong that is clicked on 
